@@ -286,7 +286,7 @@ GameObject:
   - component: {fileID: 723601819819175097}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -558,6 +558,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3135163756295090150, guid: d326bb17774750f4d96a0115037d0eb4, type: 3}
+      propertyPath: WasActiveDuringEdit
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3135163756295090150, guid: d326bb17774750f4d96a0115037d0eb4, type: 3}
       propertyPath: <IsNested>k__BackingField
       value: 1
       objectReference: {fileID: 0}
@@ -566,13 +570,41 @@ PrefabInstance:
       value: 65535
       objectReference: {fileID: 0}
     - target: {fileID: 3135163756295090150, guid: d326bb17774750f4d96a0115037d0eb4, type: 3}
+      propertyPath: NetworkBehaviours.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3135163756295090150, guid: d326bb17774750f4d96a0115037d0eb4, type: 3}
       propertyPath: <ComponentIndex>k__BackingField
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3135163756295090150, guid: d326bb17774750f4d96a0115037d0eb4, type: 3}
+      propertyPath: 'NetworkBehaviours.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2431986187995005932}
+    - target: {fileID: 3135163756295090150, guid: d326bb17774750f4d96a0115037d0eb4, type: 3}
       propertyPath: InitializedParentNetworkBehaviour
       value: 
       objectReference: {fileID: -7653722213386059186}
+    - target: {fileID: 3135163756295090150, guid: d326bb17774750f4d96a0115037d0eb4, type: 3}
+      propertyPath: SerializedTransformProperties.IsValid
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3135163756295090150, guid: d326bb17774750f4d96a0115037d0eb4, type: 3}
+      propertyPath: SerializedTransformProperties.Scale.x
+      value: 0.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 3135163756295090150, guid: d326bb17774750f4d96a0115037d0eb4, type: 3}
+      propertyPath: SerializedTransformProperties.Scale.y
+      value: 0.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 3135163756295090150, guid: d326bb17774750f4d96a0115037d0eb4, type: 3}
+      propertyPath: SerializedTransformProperties.Scale.z
+      value: 0.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 3135163756295090150, guid: d326bb17774750f4d96a0115037d0eb4, type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.w
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3986952634036392511, guid: d326bb17774750f4d96a0115037d0eb4, type: 3}
       propertyPath: _addedNetworkObject
       value: 
@@ -623,6 +655,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 955769125328413422}
     m_Modifications:
     - target: {fileID: -4674523197448687895, guid: 493e04124c858c94a8113624daff5543, type: 3}
+      propertyPath: WasActiveDuringEdit
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4674523197448687895, guid: 493e04124c858c94a8113624daff5543, type: 3}
       propertyPath: <IsNested>k__BackingField
       value: 1
       objectReference: {fileID: 0}
@@ -631,13 +667,41 @@ PrefabInstance:
       value: 65535
       objectReference: {fileID: 0}
     - target: {fileID: -4674523197448687895, guid: 493e04124c858c94a8113624daff5543, type: 3}
+      propertyPath: NetworkBehaviours.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4674523197448687895, guid: 493e04124c858c94a8113624daff5543, type: 3}
       propertyPath: <ComponentIndex>k__BackingField
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -4674523197448687895, guid: 493e04124c858c94a8113624daff5543, type: 3}
+      propertyPath: 'NetworkBehaviours.Array.data[0]'
+      value: 
+      objectReference: {fileID: 84268332287799753}
+    - target: {fileID: -4674523197448687895, guid: 493e04124c858c94a8113624daff5543, type: 3}
       propertyPath: InitializedParentNetworkBehaviour
       value: 
       objectReference: {fileID: -7653722213386059186}
+    - target: {fileID: -4674523197448687895, guid: 493e04124c858c94a8113624daff5543, type: 3}
+      propertyPath: SerializedTransformProperties.IsValid
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4674523197448687895, guid: 493e04124c858c94a8113624daff5543, type: 3}
+      propertyPath: SerializedTransformProperties.Scale.x
+      value: 0.24
+      objectReference: {fileID: 0}
+    - target: {fileID: -4674523197448687895, guid: 493e04124c858c94a8113624daff5543, type: 3}
+      propertyPath: SerializedTransformProperties.Scale.y
+      value: 0.24
+      objectReference: {fileID: 0}
+    - target: {fileID: -4674523197448687895, guid: 493e04124c858c94a8113624daff5543, type: 3}
+      propertyPath: SerializedTransformProperties.Scale.z
+      value: 0.24
+      objectReference: {fileID: 0}
+    - target: {fileID: -4674523197448687895, guid: 493e04124c858c94a8113624daff5543, type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.w
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -4674523197448687895, guid: 493e04124c858c94a8113624daff5543, type: 3}
       propertyPath: SerializedTransformProperties.Rotation.x
       value: -0
@@ -740,6 +804,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 955769125328413422}
     m_Modifications:
     - target: {fileID: -3198535793784549227, guid: 8d9c5c0b786a55849bf17406d9d02255, type: 3}
+      propertyPath: WasActiveDuringEdit
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3198535793784549227, guid: 8d9c5c0b786a55849bf17406d9d02255, type: 3}
       propertyPath: <IsNested>k__BackingField
       value: 1
       objectReference: {fileID: 0}
@@ -748,13 +816,41 @@ PrefabInstance:
       value: 65535
       objectReference: {fileID: 0}
     - target: {fileID: -3198535793784549227, guid: 8d9c5c0b786a55849bf17406d9d02255, type: 3}
+      propertyPath: NetworkBehaviours.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -3198535793784549227, guid: 8d9c5c0b786a55849bf17406d9d02255, type: 3}
       propertyPath: <ComponentIndex>k__BackingField
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -3198535793784549227, guid: 8d9c5c0b786a55849bf17406d9d02255, type: 3}
+      propertyPath: 'NetworkBehaviours.Array.data[0]'
+      value: 
+      objectReference: {fileID: 4763856015700384316}
+    - target: {fileID: -3198535793784549227, guid: 8d9c5c0b786a55849bf17406d9d02255, type: 3}
       propertyPath: InitializedParentNetworkBehaviour
       value: 
       objectReference: {fileID: -7653722213386059186}
+    - target: {fileID: -3198535793784549227, guid: 8d9c5c0b786a55849bf17406d9d02255, type: 3}
+      propertyPath: SerializedTransformProperties.IsValid
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -3198535793784549227, guid: 8d9c5c0b786a55849bf17406d9d02255, type: 3}
+      propertyPath: SerializedTransformProperties.Scale.x
+      value: 0.24
+      objectReference: {fileID: 0}
+    - target: {fileID: -3198535793784549227, guid: 8d9c5c0b786a55849bf17406d9d02255, type: 3}
+      propertyPath: SerializedTransformProperties.Scale.y
+      value: 0.24
+      objectReference: {fileID: 0}
+    - target: {fileID: -3198535793784549227, guid: 8d9c5c0b786a55849bf17406d9d02255, type: 3}
+      propertyPath: SerializedTransformProperties.Scale.z
+      value: 0.24
+      objectReference: {fileID: 0}
+    - target: {fileID: -3198535793784549227, guid: 8d9c5c0b786a55849bf17406d9d02255, type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.w
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2241974046600857539, guid: 8d9c5c0b786a55849bf17406d9d02255, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.398
@@ -916,6 +1012,10 @@ PrefabInstance:
       propertyPath: <ComponentIndex>k__BackingField
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8023613574722840687, guid: 7b9213e87bfcb3948a7076faeb035676, type: 3}
+      propertyPath: 'NetworkBehaviours.Array.data[0]'
+      value: 
+      objectReference: {fileID: 7408071641927695671}
     - target: {fileID: 8023613574722840687, guid: 7b9213e87bfcb3948a7076faeb035676, type: 3}
       propertyPath: InitializedParentNetworkBehaviour
       value: 

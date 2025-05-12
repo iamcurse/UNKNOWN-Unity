@@ -24,7 +24,7 @@ public class Weapons : NetworkBehaviour
     {
         if (TryGetComponent(out _playerInfo))
         {
-            _teamID = _playerInfo.teamID.Value;
+            //_teamID = _playerInfo.teamID.Value;
         }
     }
 
