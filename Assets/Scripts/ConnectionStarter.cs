@@ -10,7 +10,7 @@ public class ConnectionStarter : MonoBehaviour
 
     #region Client Disconnection
     
-    /// ========== Client Lost Connection To Server ==========
+    // ========== Client Lost Connection To Server ==========
     private void OnEnable()
     {
         InstanceFinder.ClientManager.OnClientConnectionState += OnClientConnectionState;
@@ -32,7 +32,7 @@ public class ConnectionStarter : MonoBehaviour
     
     #region Connection Process
     
-    /// ========== Start Connection Process ==========
+    // ========== Start Connection Process ==========
     private void Start() {
 
         if (TryGetComponent(out Tugboat tugboat))

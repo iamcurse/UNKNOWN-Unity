@@ -387,6 +387,8 @@ MonoBehaviour:
   lookXLimit: 45
   canMove: 1
   cameraYOffset: 0.4
+  isDead: 0
+  isHoldingFlag: 0
 --- !u!114 &6864070288235980301
 MonoBehaviour:
   m_ObjectHideFlags: 0

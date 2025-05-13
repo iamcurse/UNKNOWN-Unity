@@ -59,6 +59,8 @@ public class PlayerController : NetworkBehaviour
         _characterController = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        
+        captureTheFlag = FindAnyObjectByType<CaptureTheFlag>();
     }
 
     private void RegisterInput()
@@ -119,6 +121,8 @@ public class PlayerController : NetworkBehaviour
     
     #region Logic
     
+    public int teamID;
+    
     [SerializeField] private bool isDead;
     
     private void OnDeath()
@@ -132,8 +136,10 @@ public class PlayerController : NetworkBehaviour
 
     #region Flag
 
+    [SerializeField] private CaptureTheFlag captureTheFlag;
+    
     private Flag _flag;
-    [ShowOnly][SerializeField] private bool isHoldingFlag;
+    [ShowOnly] public bool isHoldingFlag;
     
     // ========== Flag Pickup ========== //
     private void OnTriggerEnter(Collider other)
@@ -143,7 +149,7 @@ public class PlayerController : NetworkBehaviour
         if (isHoldingFlag || isDead) return;
         
         _flag = other.GetComponent<Flag>();
-        _flag.FlagPickedUp();
+        _flag.FlagPickedUp(teamID);
         isHoldingFlag = true;
     }
     
@@ -156,6 +162,14 @@ public class PlayerController : NetworkBehaviour
         isHoldingFlag = false;
     }
     
+    public void DepositFlag()
+    {
+        if (!isHoldingFlag) return;
+        captureTheFlag.AddScore(_flag.currentTeamIDHoldingFlag);
+        isHoldingFlag = false;
+        _flag.FlagReset();
+    }
+    
     #endregion
 
     public void OnFire()
@@ -163,4 +177,5 @@ public class PlayerController : NetworkBehaviour
         OnDeath();
         Debug.Log("Test");
     }
+    
 }

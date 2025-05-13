@@ -36,13 +36,11 @@ public class Weapons : NetworkBehaviour
         }
     }
     
-    /// <summary>
-    /// Weapon Color
-    /// - Red = 0 = Team 1
-    /// - Blue = 1 = Team 2
-    /// - Green = 2 = Team 3
-    /// - Yellow = 3 = Team 4
-    /// </summary>
+    // Weapon Color
+    // - Red = 0 = Team 1
+    // - Blue = 1 = Team 2
+    // - Green = 2 = Team 3
+    // - Yellow = 3 = Team 4
 
     public void AssignWeapon()
     {
