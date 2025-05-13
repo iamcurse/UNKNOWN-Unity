@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using FishNet.Object;
 
@@ -41,6 +42,8 @@ public class PlayerController : NetworkBehaviour
             _playerCamera.transform.position = new Vector3(transform.position.x,
                 transform.position.y + cameraYOffset, transform.position.z);
             _playerCamera.transform.SetParent(transform);
+
+            StartCoroutine(DelayedInitialize());
 
             // Enable Input
             _playerInput = new InputSystem_Actions();
@@ -112,6 +115,14 @@ public class PlayerController : NetworkBehaviour
     private void OnDisable()
     {
         _playerInput?.Disable();
+    }
+
+    private IEnumerator DelayedInitialize()
+    {
+        yield return new WaitForSeconds(0.5f);
+        
+        if (TryGetComponent(out Weapons weapons))
+            weapons.InitializeWeapon(_playerCamera.transform);
     }
     
     #endregion
