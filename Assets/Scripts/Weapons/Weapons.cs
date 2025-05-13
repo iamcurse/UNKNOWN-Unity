@@ -10,8 +10,6 @@ public class Weapons : NetworkBehaviour
 
     private int _teamID;
     
-    private PlayerInfo _playerInfo;
-    
     public override void OnStartClient()
     {
         base.OnStartClient();
@@ -22,13 +20,10 @@ public class Weapons : NetworkBehaviour
     
     private void Awake()
     {
-        if (TryGetComponent(out _playerInfo))
-        {
-            //_teamID = _playerInfo.teamID.Value;
-        }
+
     }
 
-    public void InitializeWeapon( Transform parentTransform)
+    public void InitializeWeapon(Transform parentTransform)
     {
         foreach (var weapon in weapons.Where(weapon => weapon != null))
         {

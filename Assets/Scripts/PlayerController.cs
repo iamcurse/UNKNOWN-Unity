@@ -4,8 +4,6 @@ using FishNet.Object;
 public class PlayerController : NetworkBehaviour
 {
     
-    #region Player Control
-    
     private InputSystem_Actions _playerInput;
     private Vector2 _moveInput;
     private Vector2 _lookInput;
@@ -31,6 +29,8 @@ public class PlayerController : NetworkBehaviour
     private float cameraYOffset = 0.4f;
     private Camera _playerCamera;
 
+    #region Player Control
+    
     public override void OnStartClient()
     {
         base.OnStartClient();
@@ -49,7 +49,6 @@ public class PlayerController : NetworkBehaviour
         }
         else
         {
-            
             gameObject.GetComponent<PlayerController>().enabled = false;
         }
     }
@@ -60,7 +59,7 @@ public class PlayerController : NetworkBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         
-        captureTheFlag = FindAnyObjectByType<CaptureTheFlag>();
+        _captureTheFlag = FindAnyObjectByType<CaptureTheFlag>();
     }
 
     private void RegisterInput()
@@ -116,7 +115,19 @@ public class PlayerController : NetworkBehaviour
     }
     
     #endregion
-    
+
+    private void Awake()
+    {
+        if (FindAnyObjectByType<UIManager>())
+        {
+            _uiManager = FindAnyObjectByType<UIManager>();
+        }
+        else
+        {
+            Debug.LogError("No UIManager found in the scene.");
+        }
+    }
+
     #region Logic
     
     [ShowOnly] public int teamID;
@@ -134,10 +145,11 @@ public class PlayerController : NetworkBehaviour
 
     #region Flag
 
-    [SerializeField] private CaptureTheFlag captureTheFlag;
+    private CaptureTheFlag _captureTheFlag;
     
     private Flag _flag;
     [ShowOnly] public bool isHoldingFlag;
+    private UIManager _uiManager;
     
     // ========== Flag Pickup ========== //
     private void OnTriggerEnter(Collider other)
@@ -149,6 +161,7 @@ public class PlayerController : NetworkBehaviour
         _flag = other.GetComponent<Flag>();
         _flag.FlagPickedUp(teamID);
         isHoldingFlag = true;
+        _uiManager.flagImage.enabled = true;
     }
     
     // ========== Flag Drop ========== //
@@ -158,14 +171,16 @@ public class PlayerController : NetworkBehaviour
         
         _flag.FlagDropped(transform.position);
         isHoldingFlag = false;
+        _uiManager.flagImage.enabled = false;
     }
     
     public void DepositFlag()
     {
         if (!isHoldingFlag) return;
         
-        captureTheFlag.AddScore(_flag.currentTeamIDHoldingFlag);
+        _captureTheFlag.AddScore(_flag.currentTeamIDHoldingFlag);
         isHoldingFlag = false;
+        _uiManager.flagImage.enabled = false;
         _flag.FlagReset();
     }
     

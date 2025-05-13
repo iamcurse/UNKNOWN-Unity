@@ -12,6 +12,7 @@ public class CaptureTheFlag : NetworkBehaviour
     [ShowOnly][SerializeField] private int team1Score;
     // ReSharper disable once NotAccessedField.Local
     [ShowOnly][SerializeField] private int team2Score;
+    private UIManager _uiManager;
     
     public int winScore = 5;
     
@@ -19,11 +20,13 @@ public class CaptureTheFlag : NetworkBehaviour
 
     private void Awake()
     {
+        _uiManager = FindAnyObjectByType<UIManager>();
         _winTeamID.OnChange += OnGameFinished;
     }
 
     private void OnDestroy()
     {
+        // Unsubscribe from the OnChange event to avoid memory leaks
         _winTeamID.OnChange -= OnGameFinished;
     }
 
@@ -68,10 +71,10 @@ public class CaptureTheFlag : NetworkBehaviour
     }
     
     [ObserversRpc]
-    private void OnScoreChanged(int team1, int team2)
+    private void OnScoreChanged(int team1Score, int team2Score)
     {
-        // Update UI or show score animation
-        Debug.Log($"Score Updated: Red = {team1}, Blue = {team2}");
+        // Update UI
+        _uiManager.UpdateScoreUI(team1Score, team2Score);
     }
     
     private void OnGameFinished(int previous ,int winTeamID, bool asServer)

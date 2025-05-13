@@ -1,5 +1,4 @@
 using FishNet.Object;
-using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 
 public class SpawnBase : NetworkBehaviour
@@ -22,10 +21,12 @@ public class SpawnBase : NetworkBehaviour
             !playerController.IsOwner)
             return;
 
+        // Set the player's team ID to the spawn base's team color
         if (playerController.teamID == 0)
             playerController.teamID = (int)teamColor;
         
-        if (playerController.isHoldingFlag)
+        // If the player is holding the flag and is on the same team as the spawn base, deposit the flag
+        if (playerController.isHoldingFlag && playerController.teamID == (int)teamColor)
             playerController.DepositFlag();
 
     }
