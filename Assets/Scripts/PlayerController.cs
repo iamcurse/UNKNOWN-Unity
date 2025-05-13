@@ -76,9 +76,7 @@ public class PlayerController : NetworkBehaviour
 
         _playerInput.Player.Sprint.performed += _ => _isSprinting = true;
         _playerInput.Player.Sprint.canceled += _ => _isSprinting = false;
-
-        // Add fire callback if needed:
-        // _playerInput.Player.Fire.performed += ctx => FireWeapon();
+        
     }
 
     private void Update()
@@ -121,7 +119,7 @@ public class PlayerController : NetworkBehaviour
     
     #region Logic
     
-    public int teamID;
+    [ShowOnly] public int teamID;
     
     [SerializeField] private bool isDead;
     
@@ -165,6 +163,7 @@ public class PlayerController : NetworkBehaviour
     public void DepositFlag()
     {
         if (!isHoldingFlag) return;
+        
         captureTheFlag.AddScore(_flag.currentTeamIDHoldingFlag);
         isHoldingFlag = false;
         _flag.FlagReset();

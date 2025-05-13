@@ -1,4 +1,3 @@
-using System;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using UnityEngine;
@@ -28,7 +27,7 @@ public class CaptureTheFlag : NetworkBehaviour
         _winTeamID.OnChange -= OnGameFinished;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         team1Score = _team1Score.Value;
         team2Score = _team2Score.Value;
@@ -54,17 +53,15 @@ public class CaptureTheFlag : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     private void CheckWinCondition()
     {
-        if (_team1Score.Value > winScore)
+        if (_team1Score.Value >= winScore)
         {
-            Debug.Log("Team 1 wins!");
             // Handle team 1 win
             
             _winTeamID.Value = 1;
         }
-        else if (_team2Score.Value > winScore)
+        else if (_team2Score.Value >= winScore)
         {
-            Debug.Log("Team 2 wins!");
-            // Handle team 2 win
+             // Handle team 2 win
             
             _winTeamID.Value = 2;
         }
@@ -82,12 +79,12 @@ public class CaptureTheFlag : NetworkBehaviour
         if (asServer) return;
         switch (winTeamID)
         {
-            // Handle game finished logic
+            // Logic after game finished
             case 1:
-                Debug.Log("Team 1 wins!");
+                Debug.Log("Red Team wins!");
                 break;
             case 2:
-                Debug.Log("Team 2 wins!");
+                Debug.Log("Blue Team wins!");
                 break;
         }
 

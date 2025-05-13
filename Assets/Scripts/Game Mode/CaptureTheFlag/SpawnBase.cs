@@ -1,4 +1,5 @@
 using FishNet.Object;
+using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 
 public class SpawnBase : NetworkBehaviour
@@ -18,11 +19,15 @@ public class SpawnBase : NetworkBehaviour
     {
         if (!other.CompareTag("Player") || 
             !other.TryGetComponent(out PlayerController playerController) || 
-            !playerController.IsOwner || 
-            !playerController.isHoldingFlag)
+            !playerController.IsOwner)
             return;
+
+        if (playerController.teamID == 0)
+            playerController.teamID = (int)teamColor;
         
-        playerController.DepositFlag();
+        if (playerController.isHoldingFlag)
+            playerController.DepositFlag();
 
     }
+
 }
