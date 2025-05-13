@@ -5,19 +5,32 @@ using FishNet.Object.Synchronizing;
 public class Flag : NetworkBehaviour
 {
 
-    [ShowOnly][SerializeField] private Vector3 defaultSpawnPosition;
+    private Vector3 _defaultSpawnPosition;
+    private readonly SyncVar<Vector3> _currentPosition = new();
     private readonly SyncVar<bool> _isPickedUp = new();
     [SerializeField] private Renderer[] flagRenderer;
     private Collider _collider;
     
+    
+    // ReSharper disable once NotAccessedField.Local
+    [ShowOnly][SerializeField] private bool isPickedUp;
+    
     private void Awake()
     {
         _collider = GetComponent<Collider>();
-        defaultSpawnPosition = transform.position;
+        _defaultSpawnPosition = transform.position;
         
         SetVisibility(true);
+        _isPickedUp.OnChange += OnFlagPickedUpChanged;
+        _currentPosition.OnChange += OnFlagPositionChanged;
     }
     
+    private void OnDestroy()
+    {
+        // Unsubscribe from the OnChange event to avoid memory leaks
+        _isPickedUp.OnChange -= OnFlagPickedUpChanged;
+        _currentPosition.OnChange -= OnFlagPositionChanged;
+    }
 
     [ServerRpc(RequireOwnership = false)]
     public void FlagPickedUp()
@@ -33,7 +46,7 @@ public class Flag : NetworkBehaviour
     public void FlagDropped(Vector3 position)
     {
         //========== Flag Drop ==========//
-        transform.position = position;
+        _currentPosition.Value = position;
         _isPickedUp.Value = false;
         SetVisibility(true);
     }
@@ -42,7 +55,7 @@ public class Flag : NetworkBehaviour
     public void FlagReset()
     {
         //========== Flag Reset ==========//
-        transform.position = defaultSpawnPosition;
+        _currentPosition.Value = _defaultSpawnPosition;
         _isPickedUp.Value = false;
         SetVisibility(true);
     }
@@ -56,4 +69,27 @@ public class Flag : NetworkBehaviour
         
         _collider.enabled = isVisible;
     }
+    
+    #region SyncVar Update
+    
+    // ========== Flag Update ========== //
+    private void OnFlagPickedUpChanged(bool previous, bool current, bool asServer)
+    {
+        if (asServer) return;
+        
+        isPickedUp = current;
+        SetVisibility(!current);
+        transform.position = _currentPosition.Value;
+        Debug.Log(current ? "Flag picked up" : "Flag dropped");
+    }
+    
+    private void OnFlagPositionChanged(Vector3 previous, Vector3 current, bool asServer)
+    {
+        if (asServer) return;
+        
+        transform.position = current;
+        Debug.Log("Flag position changed to: " + current);
+    }
+    
+    #endregion
 }

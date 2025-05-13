@@ -49,6 +49,7 @@ public class PlayerController : NetworkBehaviour
         }
         else
         {
+            
             gameObject.GetComponent<PlayerController>().enabled = false;
         }
     }
@@ -113,11 +114,18 @@ public class PlayerController : NetworkBehaviour
     {
         _playerInput?.Disable();
     }
-
+    
+    #endregion
+    
+    #region Logic
+    
+    [SerializeField] private bool isDead;
+    
     private void OnDeath()
     {
-        if (_isHoldingFlag)
-            DropFlag();
+        //isDead = true;
+        
+        DropFlag();
     }
     
     #endregion
@@ -125,24 +133,34 @@ public class PlayerController : NetworkBehaviour
     #region Flag
 
     private Flag _flag;
-    [ShowOnly][SerializeField] private bool _isHoldingFlag;
+    [ShowOnly][SerializeField] private bool isHoldingFlag;
     
     // ========== Flag Pickup ========== //
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Flag") && !IsOwner) return;
+        if (!other.CompareTag("Flag") || !IsOwner) return;
+        
+        if (isHoldingFlag || isDead) return;
         
         _flag = other.GetComponent<Flag>();
         _flag.FlagPickedUp();
-        _isHoldingFlag = true;
+        isHoldingFlag = true;
     }
     
     // ========== Flag Drop ========== //
     private void DropFlag()
     {
+        if (!isDead || !isHoldingFlag) return;
+        
         _flag.FlagDropped(transform.position);
-        _isHoldingFlag = false;
+        isHoldingFlag = false;
     }
     
     #endregion
+
+    public void OnFire()
+    {
+        OnDeath();
+        Debug.Log("Test");
+    }
 }

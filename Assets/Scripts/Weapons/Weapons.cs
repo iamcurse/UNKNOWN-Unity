@@ -76,9 +76,9 @@ public class Weapons : NetworkBehaviour
         }
     }
 
-    public void OnFire()
-    {
-        Debug.Log("OnFire");
-        //_currentWeapon.Fire();
-    }
+    // public void OnFire()
+    // {
+    //     Debug.Log("OnFire");
+    //     //_currentWeapon.Fire();
+    // }
 }
