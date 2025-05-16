@@ -1,9 +1,11 @@
+using System;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using UnityEngine;
 
 public class CaptureTheFlag : NetworkBehaviour
 {
+    
     private readonly SyncVar<int> _team1Score = new();
     private readonly SyncVar<int> _team2Score = new();
     private readonly SyncVar<int> _winTeamID = new();
@@ -17,6 +19,8 @@ public class CaptureTheFlag : NetworkBehaviour
     public int winScore = 5;
     
     [SerializeField] private Flag flag;
+
+    
 
     private void Awake()
     {
@@ -71,10 +75,10 @@ public class CaptureTheFlag : NetworkBehaviour
     }
     
     [ObserversRpc]
-    private void OnScoreChanged(int team1Score, int team2Score)
+    private void OnScoreChanged(int teamAScore, int teamBScore)
     {
         // Update UI
-        _uiManager.UpdateScoreUI(team1Score, team2Score);
+        _uiManager.UpdateScoreUI(teamAScore, teamBScore);
     }
     
     private void OnGameFinished(int previous ,int winTeamID, bool asServer)

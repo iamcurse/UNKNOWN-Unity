@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using FishNet.Object;
+using FishNet.Object.Synchronizing;
 
 public class PlayerController : NetworkBehaviour
 {
@@ -137,13 +138,33 @@ public class PlayerController : NetworkBehaviour
         {
             Debug.LogError("No UIManager found in the scene.");
         }
+
+        _teamID.OnChange += OnTeamIDChange;
     }
 
     #region Logic
     
-    [ShowOnly] public int teamID;
+    [Header("Game")]
+    private readonly SyncVar<int> _teamID = new(-1);
+    [ShowOnly][SerializeField] private int teamID;
     
     [SerializeField] private bool isDead;
+
+    [ServerRpc]
+    public void SetTeamID(int id)
+    {
+        _teamID.Value = id;
+    }
+    
+    public int GetTeamID()
+    {
+        return teamID;
+    }
+
+    private void OnTeamIDChange(int oldValue, int newValue, bool asServer)
+    {
+        teamID = newValue;
+    }
     
     private void OnDeath()
     {
@@ -199,8 +220,8 @@ public class PlayerController : NetworkBehaviour
 
     public void OnFire()
     {
-        OnDeath();
-        Debug.Log("Test");
+        if (!IsOwner) return;
+        Debug.Log(teamID);
     }
     
 }
