@@ -64,6 +64,7 @@ public class PlayerController : NetworkBehaviour
         Cursor.visible = false;
         
         _captureTheFlag = FindAnyObjectByType<CaptureTheFlag>();
+        _weapons = gameObject.GetComponent<Weapons>();
     }
 
     private void RegisterInput()
@@ -149,6 +150,8 @@ public class PlayerController : NetworkBehaviour
     [ShowOnly][SerializeField] private int teamID;
     
     [SerializeField] private bool isDead;
+    
+    private Weapons _weapons;
 
     [ServerRpc]
     public void SetTeamID(int id)
@@ -164,6 +167,9 @@ public class PlayerController : NetworkBehaviour
     private void OnTeamIDChange(int oldValue, int newValue, bool asServer)
     {
         teamID = newValue;
+        
+        if (!IsOwner) return;
+        _weapons.AssignWeaponServerRPC(teamID);
     }
     
     private void OnDeath()
@@ -218,10 +224,10 @@ public class PlayerController : NetworkBehaviour
     
     #endregion
 
-    public void OnFire()
-    {
-        if (!IsOwner) return;
-        Debug.Log(teamID);
-    }
+    // public void OnFire()
+    // {
+    //     if (!IsOwner) return;
+    //     Debug.Log(teamID);
+    // }
     
 }

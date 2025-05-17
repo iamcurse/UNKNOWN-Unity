@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using FishNet.Object;
@@ -6,9 +7,9 @@ using UnityEngine;
 public class Weapons : NetworkBehaviour
 {
     [SerializeField] private List<Weapon> weapons = new List<Weapon>();
-    private Weapon _currentWeapon;
-
-    private int _teamID;
+    [SerializeField] private List<GameObject> visors = new List<GameObject>();
+    // ReSharper disable once NotAccessedField.Local
+    [ShowOnly][SerializeField] private Weapon currentWeapon;
     
     public override void OnStartClient()
     {
@@ -17,10 +18,11 @@ public class Weapons : NetworkBehaviour
         if (IsOwner) return;
         enabled = false;
     }
-    
-    private void Awake()
-    {
 
+    [ServerRpc]
+    public void AssignWeaponServerRPC(int teamID)
+    {
+        AssignWeapon(teamID);
     }
 
     public void InitializeWeapon(Transform parentTransform)
@@ -37,41 +39,47 @@ public class Weapons : NetworkBehaviour
     // - Green = 2 = Team 3
     // - Yellow = 3 = Team 4
 
-    public void AssignWeapon()
+    [ObserversRpc]
+    private void AssignWeapon(int teamID)
     {
-        switch (_teamID)
+        var weaponID = teamID - 1;
+        
+        currentWeapon = weapons[weaponID];
+        
+        foreach (var weapon in weapons.Where(w => w != null))
         {
-            case 1:
-                _currentWeapon = weapons[0];
-                weapons[0].gameObject.SetActive(true);
-                Debug.Log("Assign Red team weapon");
-                break;
-            case 2:
-                _currentWeapon = weapons[1];
-                weapons[1].gameObject.SetActive(true);
-                Debug.Log("Assign Blue team weapon");
-                break;
-            case 3:
-                _currentWeapon = weapons[2];
-                weapons[2].gameObject.SetActive(true);
-                Debug.Log("Assign Green team weapon");
-                break;
-            case 4:
-                _currentWeapon = weapons[3];
-                weapons[3].gameObject.SetActive(true);
-                Debug.Log("Assign Yellow team weapon");
-                break;
-            default:
-                Debug.LogWarning("Assign weapon logic error");
-                _currentWeapon = weapons[0];
-                weapons[0].gameObject.SetActive(true);
-                break;
+            weapon.gameObject.SetActive(false);
+        }
+
+        foreach (var visor in visors)
+        {
+            visor.SetActive(false);          
+        }
+        
+        if (weaponID >= 0 && weaponID < weapons.Count)
+        {
+            currentWeapon.gameObject.SetActive(true);
+            visors[weaponID].SetActive(true);
+
+            // Check if the weapon is active in the hierarchy
+            StartCoroutine(ActivateWeaponDelayed(currentWeapon.gameObject, weaponID));
+
+        }
+        else
+        {
+            Debug.LogWarning("Weapon ID out of range: " + weaponID);
         }
     }
+    
+    private IEnumerator ActivateWeaponDelayed(GameObject weapon, int weaponID)
+    {
+        yield return new WaitForEndOfFrame(); // Give Unity a full frame to catch up
+        
+        if (weapon.gameObject.activeSelf) yield break;
 
-    // public void OnFire()
-    // {
-    //     Debug.Log("OnFire");
-    //     //_currentWeapon.Fire();
-    // }
+        weapon.gameObject.SetActive(true);
+        visors[weaponID].SetActive(true);
+        Debug.LogWarning($"Weapon {currentWeapon.name} is not active in hierarchy. Forcing activation.");
+    }
+
 }
